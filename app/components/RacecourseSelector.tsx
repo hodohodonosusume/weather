@@ -3,66 +3,44 @@
 import { useState } from 'react';
 import { racecourses, Racecourse } from '@/app/data/racecourses';
 
-interface RacecourseSelectorProps {
+interface Props {
   onRacecourseSelect: (racecourse: Racecourse) => void;
   selectedRacecourse: Racecourse | null;
 }
 
-export default function RacecourseSelector({ onRacecourseSelect, selectedRacecourse }: RacecourseSelectorProps) {
-  const [activeTab, setActiveTab] = useState<'中央競馬' | '地方競馬'>('中央競馬');
+export default function RacecourseSelector({ onRacecourseSelect, selectedRacecourse }: Props) {
+  const [tab, setTab] = useState<'中央競馬' | '地方競馬'>('中央競馬');
 
-  const centralRacecourses = racecourses.filter(r => r.type === '中央競馬');
-  const localRacecourses = racecourses.filter(r => r.type === '地方競馬');
+  const list = racecourses.filter(r => r.type === tab);
 
   return (
-    <div className="bg-gradient-to-br from-emerald-50 to-blue-50 rounded-xl shadow-lg p-6 mb-6">
-      <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">
-        🏇 競馬場を選択
-      </h2>
-      
-      {/* タブ切り替え */}
-      <div className="flex mb-4 bg-white rounded-lg p-1 shadow-inner">
-        <button
-          onClick={() => setActiveTab('中央競馬')}
-          className={`flex-1 py-2 px-4 rounded-md font-semibold transition-all ${
-            activeTab === '中央競馬'
-              ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md'
-              : 'text-gray-600 hover:text-gray-800'
-          }`}
-        >
-          🏆 中央競馬
-        </button>
-        <button
-          onClick={() => setActiveTab('地方競馬')}
-          className={`flex-1 py-2 px-4 rounded-md font-semibold transition-all ${
-            activeTab === '地方競馬'
-              ? 'bg-gradient-to-r from-green-500 to-teal-600 text-white shadow-md'
-              : 'text-gray-600 hover:text-gray-800'
-          }`}
-        >
-          🌟 地方競馬
-        </button>
-      </div>
-
-      {/* 競馬場ボタン */}
-      <div className="grid grid-cols-2 gap-3 max-h-64 overflow-y-auto">
-        {(activeTab === '中央競馬' ? centralRacecourses : localRacecourses).map((racecourse) => (
+    <section className="mb-8">
+      <div className="flex w-full rounded-xl overflow-hidden shadow-card mb-4">
+        {(['中央競馬', '地方競馬'] as const).map(t => (
           <button
-            key={racecourse.id}
-            onClick={() => onRacecourseSelect(racecourse)}
-            className={`p-3 rounded-lg text-left transition-all duration-200 ${
-              selectedRacecourse?.id === racecourse.id
-                ? activeTab === '中央競馬'
-                  ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg transform scale-105'
-                  : 'bg-gradient-to-r from-green-500 to-teal-600 text-white shadow-lg transform scale-105'
-                : 'bg-white hover:bg-gray-50 border border-gray-200 hover:border-gray-300 hover:shadow-md'
-            }`}
+            key={t}
+            onClick={() => setTab(t)}
+            className={`flex-1 py-2 font-bold text-sm transition
+            ${tab === t ? 'bg-brand text-white' : 'bg-white hover:bg-brand/10'}`}
           >
-            <div className="font-semibold text-sm">{racecourse.name}</div>
-            <div className="text-xs opacity-75">{racecourse.prefecture}</div>
+            {t}
           </button>
         ))}
       </div>
-    </div>
+
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(130px,1fr))] gap-3">
+        {list.map(rc => (
+          <button
+            key={rc.id}
+            onClick={() => onRacecourseSelect(rc)}
+            className={`p-4 rounded-xl border text-left shadow-card hover:shadow-lg transition
+            ${selectedRacecourse?.id === rc.id ? 'bg-gradient-to-br from-brand to-accent text-white scale-105' : 'bg-white'}`}
+          >
+            <p className="font-bold">{rc.name}</p>
+            <p className="text-xs text-gray-500">{rc.prefecture}</p>
+          </button>
+        ))}
+      </div>
+    </section>
   );
 }
