@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { calculateDiscomfortIndex, oxygenIndex, sunshineScore, apparentTemperature } from '@/app/utils/calculations';
+import { calculateDiscomfortIndex, calculateOxygenIndex, sunshineScore, apparentTemperature } from '@/app/utils/calculations';
 
 const API_KEY = process.env.OPENWEATHER_API_KEY;
 
@@ -44,7 +44,7 @@ export async function GET(request: NextRequest) {
         data.main.humidity,
         data.wind.speed
       ),
-      oxygenIndex: oxygenIndex(data.main.pressure),
+      oxygenIndex: calculateOxygenIndex(data.main.pressure),
       sunshineScore: sunshineScore(cloud, uvIndex),
       precipitation12h: precip12h,
 

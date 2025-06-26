@@ -51,7 +51,7 @@ export function apparentTemperature(
 }
 
 /* 酸素指数 1013hPa=100 ----------------------------------- */
-export function oxygenIndex(p: number): number {
+export function calculateOxygenIndex(p: number): number {
   return Math.round((100 * p / 1013) * 10) / 10;
 }
 

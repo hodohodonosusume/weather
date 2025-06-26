@@ -8,7 +8,7 @@ import {
   judgeWindEffect,
   getRunningStyleImpact,
   RunningStyle,
-  oxygenIndex
+  calculateOxygenIndex
 } from '@/app/utils/calculations';
 import { Racecourse } from '@/app/data/racecourses';
 
@@ -20,7 +20,7 @@ interface Props {
 export default function WeatherCard({ weather, racecourse }: Props) {
   const homeWind = judgeWindEffect(weather.windDirection, racecourse.homeStretchDir);
   const backWind = judgeWindEffect(weather.windDirection, racecourse.backStretchDir);
-  const OxygenIndex = oxygenIndex(weather.pressure);
+  const OxygenIndex = calculateOxygenIndex(weather.pressure);
 
   const styleRow = (style: RunningStyle) => (
     <tr key={style} className="text-sm">
@@ -60,27 +60,28 @@ export default function WeatherCard({ weather, racecourse }: Props) {
           <div className="font-bold text-blue-700 flex items-center mb-2">💧 湿度</div>
           <div className="text-2xl font-bold text-blue-600">{weather.humidity}%</div>
         </div>
+
+        {/* 気圧 */}
+        <div className="bg-purple-50 p-3 rounded-lg border border-purple-200">
+          <div className="font-semibold text-purple-700 flex items-center mb-2">🔣 酸素指数</div>
+          <div className="text-2xl font-bold text-purple-600">{OxygenIndex}</div>
+        </div>
+
         <div className="bg-white/70 rounded-lg p-4 border border-orange-100 shadow">
           <div className="font-bold text-orange-700 flex items-center mb-2">🌡️ 不快指数</div>
           <div className="text-2xl font-bold text-orange-600">{weather.discomfortIndex}</div>
           <div className="text-xs text-orange-500">{getDiscomfortLevel(weather.discomfortIndex)}</div>
         </div>
+
         {/* 体感温度 */}
         <div className="bg-pink-50 p-3 rounded-lg border border-pink-200">
-          <div className="font-semibold text-pink-800">🌡体感温度</div>
+          <div className="font-semibold text-pink-800">🌡 体感温度</div>
           <div className="text-2xl font-bold text-pink-600">{weather.apparentTemperature}°C</div>
-        </div>
-
-        {/* 気圧 */}
-        <div className="bg-purple-50 p-3 rounded-lg border border-purple-200">
-          <div className="font-semibold text-purple-800">気圧 / 酸素指数</div>
-          <div className="text-xl font-bold text-purple-600">{weather.pressure}hPa</div>
-          <div className="text-xs text-purple-600 mt-1">酸素 {weather.OxygenIndex}</div>
         </div>
         
         {/* 晴れ度 */}
         <div className="bg-yellow-50 p-3 rounded-lg border border-yellow-200">
-          <div className="font-semibold text-yellow-800">☀晴れ度</div>
+          <div className="font-semibold text-yellow-800">🌞 晴れ度</div>
           <div className="text-2xl font-bold text-yellow-600">{weather.sunshineScore}</div>
         </div>
 
@@ -92,13 +93,13 @@ export default function WeatherCard({ weather, racecourse }: Props) {
         
         {/* 12h降水量 */}
         <div className="bg-indigo-50 p-3 rounded-lg border border-indigo-200">
-          <div className="font-semibold text-indigo-800">🌧12時間降水量</div>
+          <div className="font-semibold text-indigo-800">🌧 12時間降水量</div>
           <div className="text-2xl font-bold text-indigo-600">{weather.precipitation12h}mm</div>
         </div>
         
         {/* 風向風速 目安付き */}
         <div className="bg-green-50 p-3 rounded-lg border border-green-200">
-          <div className="font-semibold text-green-800">🌬風向・風速</div>
+          <div className="font-semibold text-green-800">🌬 風向・風速</div>
           <div className="text-lg font-bold text-green-600">
             {getWindDirection(weather.windDirection)} {weather.windSpeed}m/s
           </div>
