@@ -11,6 +11,10 @@ export interface WeatherData {
   description: string;
   icon: string;
   timestamp: string;
+  apparentTemperature: number;   // 体感温度（°C）
+  oxygenIndex: number;           // 酸素指数
+  sunshineScore: number;         // 晴れ度（0-100）
+  precipitation12h: number;      // 直近12h降水量（mm）
 }
 
 export interface OpenWeatherResponse {

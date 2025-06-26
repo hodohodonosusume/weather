@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { calculateDiscomfortIndex } from '@/app/utils/calculations';
+import { calculateDiscomfortIndex, oxygenIndex, sunshineScore, apparentTemperature } from '@/app/utils/calculations';
 
 const API_KEY = process.env.OPENWEATHER_API_KEY;
 
@@ -29,28 +29,37 @@ export async function GET(request: NextRequest) {
     const response = await fetch(url);
     const data = await response.json();
 
-    if (!response.ok) {
-      return NextResponse.json({ error: data.message }, { status: response.status });
-    }
-
-    // 降水確率のダミーデータ（OpenWeatherMapの無料版では提供されない）
-    const precipitationProbability = Math.floor(Math.random() * 100);
+    const uvIndex = data.uvi ?? 5;               // OneCall で取得できない場合は仮 5
+    const cloud   = data.clouds?.all ?? 50;      // 0-100 (%)
+    const precip12h = data.rain?.['1h'] ? data.rain['1h'] * 12 : 0; // 簡易
 
     const weatherData = {
       location: data.name,
       temperature: Math.round(data.main.temp),
       humidity: data.main.humidity,
-      discomfortIndex: Math.round(calculateDiscomfortIndex(data.main.temp, data.main.humidity)),
-      windDirection: data.wind?.deg || 0,
-      windSpeed: data.wind?.speed || 0,
       pressure: data.main.pressure,
-      precipitationProbability,
+
+      apparentTemperature: apparentTemperature(
+        data.main.temp,
+        data.main.humidity,
+        data.wind.speed
+      ),
+      oxygenIndex: oxygenIndex(data.main.pressure),
+      sunshineScore: sunshineScore(cloud, uvIndex),
+      precipitation12h: precip12h,
+
+      discomfortIndex: Math.round(
+        calculateDiscomfortIndex(data.main.temp, data.main.humidity)
+      ),
+      windDirection: data.wind.deg,
+      windSpeed: data.wind.speed,
       precipitation: data.rain?.['1h'] || 0,
+    
       description: data.weather[0].description,
       icon: data.weather[0].icon,
       timestamp: new Date().toISOString(),
     };
-
+    
     return NextResponse.json(weatherData);
   } catch (error) {
     console.error('Weather API error:', error);
