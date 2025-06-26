@@ -112,6 +112,146 @@ export const racecourses: Racecourse[] = [
     coordinates: { lat: 33.8833, lon: 130.8750 },
     homeStretchDir: 157.5,  // 北北西→南南東
     backStretchDir: 337.5   // 南南東→北北西
-  }
-  /* 地方競馬場は既存データそのままでも動作します */
+  },
+  // 地方競馬１５場を以下のように追加
+  {
+    id: 'monbetsu',
+    name: '門別競馬場',
+    city: 'Hidaka',
+    prefecture: '北海道',
+    type: '地方競馬',
+    coordinates: { lat: 42.4167, lon: 142.0833 },
+    homeStretchDir: 120,  // 西→東（右回りなのでバックは東→西）
+    backStretchDir: 300
+  },
+  {
+    id: 'morioka',
+    name: '盛岡競馬場',
+    city: 'Morioka',
+    prefecture: '岩手県',
+    type: '地方競馬',
+    coordinates: { lat: 39.7036, lon: 141.1527 },
+    homeStretchDir: 225,  // 左回り：直線は西→東の逆なので西→東
+    backStretchDir: 45
+  },
+  {
+    id: 'mizusawa',
+    name: '水沢競馬場',
+    city: 'Oshu',
+    prefecture: '岩手県',
+    type: '地方競馬',
+    coordinates: { lat: 39.1439, lon: 141.1347 },
+    homeStretchDir: 330,  // 右回り：直線は西→東
+    backStretchDir: 150
+  },
+  {
+    id: 'urawa',
+    name: '浦和競馬場',
+    city: 'Saitama',
+    prefecture: '埼玉県',
+    type: '地方競馬',
+    coordinates: { lat: 35.8617, lon: 139.6456 },
+    homeStretchDir: 135,   // 左回り：南→北  (東向きと仮定)
+    backStretchDir: 315
+  },
+  {
+    id: 'funabashi',
+    name: '船橋競馬場',
+    city: 'Funabashi',
+    prefecture: '千葉県',
+    type: '地方競馬',
+    coordinates: { lat: 35.6944, lon: 139.9833 },
+    homeStretchDir: 270,  // 左回り：東→西
+    backStretchDir: 90
+  },
+  {
+    id: 'ooi',
+    name: '大井競馬場',
+    city: 'Shinagawa',
+    prefecture: '東京都',
+    type: '地方競馬',
+    coordinates: { lat: 35.5906, lon: 139.7394 },
+    homeStretchDir: 60,  // 右回りの一部は北→南
+    backStretchDir: 240
+  },
+  {
+    id: 'kawasaki',
+    name: '川崎競馬場',
+    city: 'Kawasaki',
+    prefecture: '神奈川県',
+    type: '地方競馬',
+    coordinates: { lat: 35.5308, lon: 139.7028 },
+    homeStretchDir: 270,  // 左回り推定：西→東
+    backStretchDir: 90
+  },
+  {
+    id: 'kanazawa',
+    name: '金沢競馬場',
+    city: 'Kanazawa',
+    prefecture: '石川県',
+    type: '地方競馬',
+    coordinates: { lat: 36.5944, lon: 136.6256 },
+    homeStretchDir: 0,  // 右回り：北→南
+    backStretchDir: 180
+  },
+  {
+    id: 'kasamatsu',
+    name: '笠松競馬場',
+    city: 'Kasamatsu',
+    prefecture: '岐阜県',
+    type: '地方競馬',
+    coordinates: { lat: 35.3833, lon: 136.7667 },
+    homeStretchDir: 45,  // みぎ回り：西→東
+    backStretchDir: 225
+  },
+  {
+    id: 'nagoya',
+    name: '名古屋競馬場',
+    city: 'Yatomi',
+    prefecture: '愛知県',
+    type: '地方競馬',
+    coordinates: { lat: 35.1167, lon: 136.7333 },
+    homeStretchDir: 80,  // みぎ回り：西→東
+    backStretchDir: 260
+  },
+  {
+    id: 'himeji',
+    name: '姫路競馬場',
+    city: 'Himeji',
+    prefecture: '兵庫県',
+    type: '地方競馬',
+    coordinates: { lat: 34.8161, lon: 134.6850 },
+    homeStretchDir: 270,  // 右回り：北→南
+    backStretchDir: 90
+  },
+  {
+    id: 'sonoda',
+    name: '園田競馬場',
+    city: 'Amagasaki',
+    prefecture: '兵庫県',
+    type: '地方競馬',
+    coordinates: { lat: 34.7333, lon: 135.4167 },
+    homeStretchDir: 270,  // みぎ回り：西→東
+    backStretchDir: 90
+  },
+  {
+    id: 'kochi',
+    name: '高知競馬場',
+    city: 'Kochi',
+    prefecture: '高知県',
+    type: '地方競馬',
+    coordinates: { lat: 33.5597, lon: 133.5311 },
+    homeStretchDir: 45,    // 南→北
+    backStretchDir: 225
+  },
+  {
+    id: 'saga',
+    name: '佐賀競馬場',
+    city: 'Tosu',
+    prefecture: '佐賀県',
+    type: '地方競馬',
+    coordinates: { lat: 33.3781, lon: 130.5197 },
+    homeStretchDir: 20,    // 南→北
+    backStretchDir: 200
+  },
 ];
