@@ -24,7 +24,8 @@ function MemoPage() {
       {({ signOut, user }) => (
         <main className="container mx-auto p-4 md:p-8">
           <div className="flex justify-between items-center mb-6">
-            <h1 className="text-2xl md:text-3xl font-bold">ようこそ、{user?.attributes?.email || user?.username} さん</h1>
+            <h1 className="text-2xl md:text-3xl font-bold">ようこそ、{user?.username} さん</h1>
+
             <button onClick={signOut} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">サインアウト</button>
           </div>
           
