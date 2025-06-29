@@ -1,14 +1,12 @@
-// src/app/api/weather/route.ts の場合
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
   try {
-    // ★★★ 環境変数の読み込み確認（サーバーサイドでは NEXT_PUBLIC_ は不要）★★★
     const apiKey = process.env.OPENWEATHER_API_KEY;
     
-    // ★★★ APIキーが設定されているかチェック ★★★
+    console.log('API Key exists:', !!apiKey); // デバッグ用
+    
     if (!apiKey) {
-      console.error('OPENWEATHER_API_KEY is not configured');
       return NextResponse.json(
         { error: 'API key not configured' }, 
         { status: 500 }
@@ -26,13 +24,11 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // ★★★ OpenWeatherMap API呼び出し ★★★
     const response = await fetch(
       `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=ja`
     );
 
     if (!response.ok) {
-      console.error('OpenWeatherMap API error:', response.status, response.statusText);
       return NextResponse.json(
         { error: 'Weather API request failed' }, 
         { status: 500 }

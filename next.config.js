@@ -1,19 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // ★★★ 環境変数を明示的にNext.jsに渡す ★★★
+  env: {
+    OPENWEATHER_API_KEY: process.env.OPENWEATHER_API_KEY,
+  },
   experimental: {
-    appDir: true,
-  },
-  async headers() {
-    return [
-      {
-        source: '/manifest.json',
-        headers: [
-          {
-            key: 'Content-Type',
-            value: 'application/json',
-          },
-        ],
-      },
-    ];
-  },
-};
+    // Amplify対応
+    outputFileTracingRoot: undefined,
+  }
+}
+
+module.exports = nextConfig
