@@ -7,13 +7,7 @@ import Link from 'next/link';
 
 import WeatherCard from '@/components/WeatherCard';
 import { racecourses, Racecourse } from '@/app/data/racecourses';
-import { WeatherData, OpenWeatherResponse } from '@/app/types/weather';
-import {
-  calculateDiscomfortIndex,
-  apparentTemperature,
-  calculateOxygenIndex,
-  sunshineScore
-} from '@/app/utils/calculations';
+import { WeatherData } from '@/app/types/weather';
 
 export default function WeatherPage() {
   const [user, setUser] = useState<any>(null);
@@ -44,34 +38,6 @@ export default function WeatherPage() {
     }
   };
 
-  // OpenWeatherMap APIのレスポンスをWeatherDataに変換
-  const transformWeatherData = (apiResponse: OpenWeatherResponse, racecourse: Racecourse): WeatherData => {
-    const temp = apiResponse.main.temp;
-    const humidity = apiResponse.main.humidity;
-    const windSpeed = apiResponse.wind.speed;
-    const cloudiness = 0; // OpenWeatherMapから雲量を取得できない場合のデフォルト
-    const uvIndex = 5; // UV指数のデフォルト値
-
-    return {
-      location: racecourse.name,
-      temperature: Math.round(temp),
-      humidity: humidity,
-      discomfortIndex: calculateDiscomfortIndex(temp, humidity),
-      windDirection: apiResponse.wind.deg,
-      windSpeed: Math.round(windSpeed * 10) / 10,
-      pressure: apiResponse.main.pressure,
-      precipitationProbability: 0, // OpenWeatherMapの基本プランでは取得できない
-      precipitation: apiResponse.rain?.['1h'] || 0,
-      description: apiResponse.weather[0].description,
-      icon: apiResponse.weather[0].icon,
-      timestamp: new Date(apiResponse.dt * 1000).toISOString(),
-      apparentTemperature: apparentTemperature(temp, humidity, windSpeed),
-      oxygenIndex: calculateOxygenIndex(apiResponse.main.pressure),
-      sunshineScore: sunshineScore(cloudiness, uvIndex),
-      precipitation12h: (apiResponse.rain?.['1h'] || 0) * 12, // 1時間の12倍で概算
-    };
-  };
-
   const fetchAllWeatherData = async () => {
     setWeatherLoading(true);
     setError(null);
@@ -79,16 +45,26 @@ export default function WeatherPage() {
     try {
       const weatherPromises = racecourses.map(async (racecourse) => {
         try {
+          // ★★★ coordinates プロパティを正しく参照 ★★★
           const response = await fetch(
             `/api/weather?lat=${racecourse.coordinates.lat}&lon=${racecourse.coordinates.lon}`
           );
           
           if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            console.error(`HTTP ${response.status} for ${racecourse.name}`);
+            return null;
           }
           
-          const apiData: OpenWeatherResponse = await response.json();
-          const weatherData = transformWeatherData(apiData, racecourse);
+          const weatherData = await response.json();
+          
+          // ★★★ APIから返ってくるデータをそのまま使用（変換不要）★★★
+          console.log(`Weather data for ${racecourse.name}:`, weatherData);
+          
+          // APIレスポンスが期待された構造かチェック
+          if (!weatherData.temperature && weatherData.temperature !== 0) {
+            console.error(`Invalid weather data for ${racecourse.name}:`, weatherData);
+            return null;
+          }
           
           return { name: racecourse.name, data: weatherData };
         } catch (error) {
