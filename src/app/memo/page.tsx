@@ -13,7 +13,7 @@ import MemoList from '@/components/MemoList';
 // ★★★ お気に入り馬の部品を読み込むわよ！ ★★★
 import FavoriteHorseManager from '@/components/FavoriteHorseManager';
 
-Amplify.configure({ ...awsExports, ssr: true });
+Amplify.configure(awsExports);
 
 function MemoPage() {
   const [refreshTrigger, setRefreshTrigger] = useState(0);
