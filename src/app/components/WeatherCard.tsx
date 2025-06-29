@@ -18,6 +18,9 @@ interface Props {
 }
 
 export default function WeatherCard({ weather, racecourse }: Props) {
+    // ★★★ デバッグ用：データの中身を確認 ★★★
+  console.log('Weather data received:', weather);
+  console.log('Weather keys:', Object.keys(weather));
   const homeWind = judgeWindEffect(weather.windDirection, racecourse.homeStretchDir);
   const backWind = judgeWindEffect(weather.windDirection, racecourse.backStretchDir);
   const OxygenIndex = calculateOxygenIndex(weather.pressure);
