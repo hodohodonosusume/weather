@@ -16,7 +16,15 @@
     "weather": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
-      "dependsOn": [],
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "weatherb038c78d",
+          "attributes": [
+            "UserPoolId"
+          ]
+        }
+      ],
       "output": {
         "authConfig": {
           "defaultAuthentication": {
@@ -25,9 +33,68 @@
               "apiKeyExpirationDays": 7
             }
           },
-          "additionalAuthenticationProviders": []
-        }
-      }
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+              "userPoolConfig": {
+                "userPoolId": "authweatherb038c78d"
+              }
+            }
+          ]
+        },
+        "GraphQLAPIIdOutput": "fhooeo6ukvdsvbbigxa2b7r2qm",
+        "GraphQLAPIEndpointOutput": "https://gamtsf4ch5aaxkipbiezyecqmi.appsync-api.ap-northeast-1.amazonaws.com/graphql",
+        "GraphQLAPIKeyOutput": "da2-fylo5aobjfcyrhf5ib7dvxddyi"
+      },
+      "lastPushTimeStamp": "2025-06-29T04:45:47.257Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-weather-dev-5f937-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "logicalId": "apiweather"
+      },
+      "lastPushDirHash": "vGobjx9dc7VY3szGHnQHX6cHeNw="
+    }
+  },
+  "auth": {
+    "weatherb038c78d": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false,
+      "frontendAuthConfig": {
+        "socialProviders": [],
+        "usernameAttributes": [
+          "EMAIL"
+        ],
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": []
+        },
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-weather-dev-5f937-deployment/amplify-cfn-templates/auth/weatherb038c78d-cloudformation-template.json",
+        "logicalId": "authweatherb038c78d"
+      },
+      "lastPushTimeStamp": "2025-06-29T04:45:47.257Z",
+      "output": {
+        "UserPoolId": "ap-northeast-1_46s2viR10",
+        "AppClientIDWeb": "30vlbq9nehdsueff68frlbb0cu",
+        "AppClientID": "48765qssngbqnljjkv3cdlgia6",
+        "IdentityPoolId": "ap-northeast-1:a4a6d1f9-023e-4044-997f-032ddddb08bc",
+        "UserPoolArn": "arn:aws:cognito-idp:ap-northeast-1:911806762114:userpool/ap-northeast-1_46s2viR10",
+        "IdentityPoolName": "weatherb038c78d_identitypool_b038c78d__dev",
+        "UserPoolName": "weatherb038c78d_userpool_b038c78d"
+      },
+      "lastPushDirHash": "4CqQugs5fsDnLi1M1KzYfCgWm68="
     }
   }
 }

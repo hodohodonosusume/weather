@@ -75,6 +75,16 @@ export type Memo = {
   owner?: string | null,
 };
 
+export type FavoriteHorse = {
+  __typename: "FavoriteHorse";
+  id: string;
+  horseName: string;
+  createdAt: string;
+  updatedAt: string;
+  owner?: string | null;
+};
+
+
 export type UpdateMemoInput = {
   id: string,
   horseName?: string | null,

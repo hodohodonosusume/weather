@@ -1,0 +1,308 @@
+type Memo @aws_cognito_user_pools {
+  id: ID!
+  horseName: String!
+  date: AWSDate!
+  tags: [String!]
+  content: String!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  owner: String
+}
+
+type FavoriteHorse @aws_cognito_user_pools {
+  id: ID!
+  horseName: String!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  owner: String
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelSubscriptionStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  in: [String]
+  notIn: [String]
+}
+
+input ModelSubscriptionIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  in: [Int]
+  notIn: [Int]
+}
+
+input ModelSubscriptionFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  in: [Float]
+  notIn: [Float]
+}
+
+input ModelSubscriptionBooleanInput {
+  ne: Boolean
+  eq: Boolean
+}
+
+input ModelSubscriptionIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  in: [ID]
+  notIn: [ID]
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelMemoConnection @aws_cognito_user_pools {
+  items: [Memo]!
+  nextToken: String
+}
+
+input ModelMemoFilterInput {
+  id: ModelIDInput
+  horseName: ModelStringInput
+  date: ModelStringInput
+  tags: ModelStringInput
+  content: ModelStringInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelMemoFilterInput]
+  or: [ModelMemoFilterInput]
+  not: ModelMemoFilterInput
+  owner: ModelStringInput
+}
+
+type Query {
+  getMemo(id: ID!): Memo @aws_cognito_user_pools
+  listMemos(filter: ModelMemoFilterInput, limit: Int, nextToken: String): ModelMemoConnection @aws_cognito_user_pools
+  getFavoriteHorse(id: ID!): FavoriteHorse @aws_cognito_user_pools
+  listFavoriteHorses(filter: ModelFavoriteHorseFilterInput, limit: Int, nextToken: String): ModelFavoriteHorseConnection @aws_cognito_user_pools
+}
+
+input ModelMemoConditionInput {
+  horseName: ModelStringInput
+  date: ModelStringInput
+  tags: ModelStringInput
+  content: ModelStringInput
+  and: [ModelMemoConditionInput]
+  or: [ModelMemoConditionInput]
+  not: ModelMemoConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  owner: ModelStringInput
+}
+
+input CreateMemoInput {
+  id: ID
+  horseName: String!
+  date: AWSDate!
+  tags: [String!]
+  content: String!
+}
+
+input UpdateMemoInput {
+  id: ID!
+  horseName: String
+  date: AWSDate
+  tags: [String!]
+  content: String
+}
+
+input DeleteMemoInput {
+  id: ID!
+}
+
+type Mutation {
+  createMemo(input: CreateMemoInput!, condition: ModelMemoConditionInput): Memo @aws_cognito_user_pools
+  updateMemo(input: UpdateMemoInput!, condition: ModelMemoConditionInput): Memo @aws_cognito_user_pools
+  deleteMemo(input: DeleteMemoInput!, condition: ModelMemoConditionInput): Memo @aws_cognito_user_pools
+  createFavoriteHorse(input: CreateFavoriteHorseInput!, condition: ModelFavoriteHorseConditionInput): FavoriteHorse @aws_cognito_user_pools
+  updateFavoriteHorse(input: UpdateFavoriteHorseInput!, condition: ModelFavoriteHorseConditionInput): FavoriteHorse @aws_cognito_user_pools
+  deleteFavoriteHorse(input: DeleteFavoriteHorseInput!, condition: ModelFavoriteHorseConditionInput): FavoriteHorse @aws_cognito_user_pools
+}
+
+input ModelSubscriptionMemoFilterInput {
+  id: ModelSubscriptionIDInput
+  horseName: ModelSubscriptionStringInput
+  date: ModelSubscriptionStringInput
+  tags: ModelSubscriptionStringInput
+  content: ModelSubscriptionStringInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionMemoFilterInput]
+  or: [ModelSubscriptionMemoFilterInput]
+  owner: ModelStringInput
+}
+
+type Subscription {
+  onCreateMemo(filter: ModelSubscriptionMemoFilterInput, owner: String): Memo @aws_subscribe(mutations: ["createMemo"]) @aws_cognito_user_pools
+  onUpdateMemo(filter: ModelSubscriptionMemoFilterInput, owner: String): Memo @aws_subscribe(mutations: ["updateMemo"]) @aws_cognito_user_pools
+  onDeleteMemo(filter: ModelSubscriptionMemoFilterInput, owner: String): Memo @aws_subscribe(mutations: ["deleteMemo"]) @aws_cognito_user_pools
+  onCreateFavoriteHorse(filter: ModelSubscriptionFavoriteHorseFilterInput, owner: String): FavoriteHorse @aws_subscribe(mutations: ["createFavoriteHorse"]) @aws_cognito_user_pools
+  onUpdateFavoriteHorse(filter: ModelSubscriptionFavoriteHorseFilterInput, owner: String): FavoriteHorse @aws_subscribe(mutations: ["updateFavoriteHorse"]) @aws_cognito_user_pools
+  onDeleteFavoriteHorse(filter: ModelSubscriptionFavoriteHorseFilterInput, owner: String): FavoriteHorse @aws_subscribe(mutations: ["deleteFavoriteHorse"]) @aws_cognito_user_pools
+}
+
+type ModelFavoriteHorseConnection @aws_cognito_user_pools {
+  items: [FavoriteHorse]!
+  nextToken: String
+}
+
+input ModelFavoriteHorseFilterInput {
+  id: ModelIDInput
+  horseName: ModelStringInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelFavoriteHorseFilterInput]
+  or: [ModelFavoriteHorseFilterInput]
+  not: ModelFavoriteHorseFilterInput
+  owner: ModelStringInput
+}
+
+input ModelFavoriteHorseConditionInput {
+  horseName: ModelStringInput
+  and: [ModelFavoriteHorseConditionInput]
+  or: [ModelFavoriteHorseConditionInput]
+  not: ModelFavoriteHorseConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  owner: ModelStringInput
+}
+
+input CreateFavoriteHorseInput {
+  id: ID
+  horseName: String!
+}
+
+input UpdateFavoriteHorseInput {
+  id: ID!
+  horseName: String
+}
+
+input DeleteFavoriteHorseInput {
+  id: ID!
+}
+
+input ModelSubscriptionFavoriteHorseFilterInput {
+  id: ModelSubscriptionIDInput
+  horseName: ModelSubscriptionStringInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionFavoriteHorseFilterInput]
+  or: [ModelSubscriptionFavoriteHorseFilterInput]
+  owner: ModelStringInput
+}

@@ -1,5 +1,11 @@
 {
   "AppSyncApiName": "weather",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
-  "DynamoDBEnableServerSideEncryption": false
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authweatherb038c78d",
+      "Outputs.UserPoolId"
+    ]
+  }
 }

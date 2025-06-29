@@ -1,0 +1,13 @@
+{
+    "AppSyncApiName": "weather",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authweatherb038c78d",
+            "Outputs.UserPoolId"
+        ]
+    },
+    "S3DeploymentBucket": "amplify-weather-dev-5f937-deployment",
+    "S3DeploymentRootKey": "amplify-appsync-files/797b86c274c59ef76716473d70ac8c9a4a3c3134"
+}
