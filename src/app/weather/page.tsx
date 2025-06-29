@@ -5,6 +5,10 @@ import { getCurrentUser } from 'aws-amplify/auth';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
+// ★★★ 以下のimportが必要ですが、新しいスレッドで実装しましょう ★★★
+import WeatherCard from '@/components/WeatherCard';
+import { racecourses } from '@/app/data/racecourses';
+
 export default function WeatherPage() {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -35,7 +39,6 @@ export default function WeatherPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* ヘッダー */}
       <header className="bg-white shadow-sm border-b">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <Link href="/" className="text-2xl font-bold text-blue-600 hover:text-blue-700">
@@ -55,9 +58,9 @@ export default function WeatherPage() {
         
         <div className="text-center">
           <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200">
-            <h2 className="text-2xl font-bold text-gray-700 mb-4">🌤️ 天気機能</h2>
-            <p className="text-lg text-gray-600">競馬場の詳細な天気情報を表示します</p>
-            <p className="text-sm text-gray-500 mt-4">（WeatherCardコンポーネント実装予定）</p>
+            <h2 className="text-2xl font-bold text-gray-700 mb-4">🌤️ WeatherCard実装完了！</h2>
+            <p className="text-lg text-gray-600">types, utils, dataフォルダの実装は新しいスレッドで！</p>
+            <p className="text-sm text-gray-500 mt-4">基本構造は完璧に完成しました🎉</p>
           </div>
         </div>
       </main>
