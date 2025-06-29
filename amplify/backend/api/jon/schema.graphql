@@ -1,0 +1,13 @@
+type Memo @model @auth(rules: [{ allow: owner }]) {
+  id: ID!
+  horseName: String!
+  date: AWSDate!
+  tags: [String!]
+  content: String!
+}
+
+# ★★★ この部分が、新しく追加した「お気に入り馬」の設計図よ！ ★★★
+type FavoriteHorse @model @auth(rules: [{ allow: owner }]) {
+  id: ID!
+  horseName: String!
+}
