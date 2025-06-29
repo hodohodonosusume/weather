@@ -5,10 +5,6 @@ import { getCurrentUser } from 'aws-amplify/auth';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
-// WeatherCardなど既存のコンポーネントをインポート
-import WeatherCard from '@/components/WeatherCard';
-import { Racecourse, racecourses } from '@/app/data/racecourses';
-
 export default function WeatherPage() {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -57,9 +53,12 @@ export default function WeatherPage() {
       <main className="container mx-auto p-4 md:p-8">
         <h1 className="text-3xl font-bold text-gray-800 mb-8 text-center">競馬場天気情報</h1>
         
-        {/* 既存の天気表示コンポーネントをここに追加 */}
         <div className="text-center">
-          <p className="text-lg text-gray-600">競馬場の天気情報を表示します</p>
+          <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200">
+            <h2 className="text-2xl font-bold text-gray-700 mb-4">🌤️ 天気機能</h2>
+            <p className="text-lg text-gray-600">競馬場の詳細な天気情報を表示します</p>
+            <p className="text-sm text-gray-500 mt-4">（WeatherCardコンポーネント実装予定）</p>
+          </div>
         </div>
       </main>
     </div>
