@@ -5,14 +5,13 @@ import { getCurrentUser } from 'aws-amplify/auth';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
-import MemoForm from '@/components/MemoForm';
-import MemoList from '@/components/MemoList';
-import FavoriteHorseManager from '@/components/FavoriteHorseManager';
+// WeatherCardなど既存のコンポーネントをインポート
+import WeatherCard from '@/components/WeatherCard';
+import { Racecourse, racecourses } from '@/app/data/racecourses';
 
-export default function MemoPage() {
+export default function WeatherPage() {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [refreshTrigger, setRefreshTrigger] = useState(0);
   const router = useRouter();
 
   useEffect(() => {
@@ -24,14 +23,10 @@ export default function MemoPage() {
       const currentUser = await getCurrentUser();
       setUser(currentUser);
     } catch (error) {
-      router.push('/'); // 未認証なら homepage にリダイレクト
+      router.push('/');
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleMemoAdded = () => {
-    setRefreshTrigger(prev => prev + 1);
   };
 
   if (loading) {
@@ -39,7 +34,7 @@ export default function MemoPage() {
   }
 
   if (!user) {
-    return null; // リダイレクト中
+    return null;
   }
 
   return (
@@ -51,8 +46,8 @@ export default function MemoPage() {
             🏇 KEIBA Weather
           </Link>
           <div className="flex items-center gap-4">
-            <Link href="/weather" className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">
-              天気を見る
+            <Link href="/memo" className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg">
+              メモを見る
             </Link>
             <span className="text-gray-700">{user.username} さん</span>
           </div>
@@ -60,16 +55,11 @@ export default function MemoPage() {
       </header>
 
       <main className="container mx-auto p-4 md:p-8">
-        <h1 className="text-3xl font-bold text-gray-800 mb-8 text-center">馬メモ管理</h1>
+        <h1 className="text-3xl font-bold text-gray-800 mb-8 text-center">競馬場天気情報</h1>
         
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          <div className="lg:col-span-4 space-y-8">
-            <MemoForm onMemoAdded={handleMemoAdded} />
-            <FavoriteHorseManager />
-          </div>
-          <div className="lg:col-span-8">
-            <MemoList refreshTrigger={refreshTrigger} />
-          </div>
+        {/* 既存の天気表示コンポーネントをここに追加 */}
+        <div className="text-center">
+          <p className="text-lg text-gray-600">競馬場の天気情報を表示します</p>
         </div>
       </main>
     </div>
