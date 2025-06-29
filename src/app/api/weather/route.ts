@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { calculateDiscomfortIndex, calculateOxygenIndex, sunshineScore, apparentTemperature } from '@/app/utils/calculations';
+import { calculateDiscomfortIndex, calculateOxygenIndex, sunshineScore, apparentTemperature } from '../../utils/calculations';
 
 const API_KEY = process.env.OPENWEATHER_API_KEY;
 

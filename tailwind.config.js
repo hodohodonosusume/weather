@@ -1,9 +1,14 @@
+// ファイルの場所: tailwind.config.js
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  // ★★★ ここの2行だけを書き換えるのよ！ ★★★
+  // 'app'や'components'の前に './src/' を追加してあげるだけ。
   content: [
-    './app/**/*.{js,ts,jsx,tsx}',
-    './components/**/*.{js,ts,jsx,tsx}',
+    './src/app/**/*.{js,ts,jsx,tsx}',
+    './src/components/**/*.{js,ts,jsx,tsx}',
   ],
+  // ↓↓↓ ここから下は、あなたの素晴らしいデザインだから一切変えないわよ！ ↓↓↓
   theme: {
     extend: {
       colors: {

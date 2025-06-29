@@ -1,6 +1,9 @@
+// ファイルの場所: tsconfig.json
+
 {
   "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "es6"],
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -17,11 +20,12 @@
         "name": "next"
       }
     ],
+    // ★★★ここから下が大事な「おまじない」よ★★★
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "amplify/backend/api/jon/build/schema.graphql"],
   "exclude": ["node_modules"]
 }

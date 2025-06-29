@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-amplify/ui-react": "^6.11.2",
     "@tailwindcss/forms": "^0.5.10",
     "@tailwindcss/typography": "^0.5.16",
     "@tsparticles/engine": "^3.0.0",
@@ -17,13 +18,19 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "aws-amplify": "^6.15.1",
     "framer-motion": "^10.16.0",
     "next": "14.0.0",
+    "prop-types": "^15.8.1",
     "react": "^18",
+    "react-datepicker": "^8.4.0",
     "react-dom": "^18",
+    "react-tagsinput": "^3.20.3",
     "typescript": "^5"
   },
   "devDependencies": {
+    "@types/react-datepicker": "^6.2.0",
+    "@types/react-tagsinput": "^3.20.6",
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.17"

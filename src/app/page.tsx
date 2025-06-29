@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import RacecourseSelector from './components/RacecourseSelector';
 import WeatherCard from './components/WeatherCard';
 import { WeatherData } from './types/weather';
